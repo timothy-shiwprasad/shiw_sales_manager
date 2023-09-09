@@ -1,0 +1,64 @@
+.invoice-table {
+  width: 80%;
+  margin-left: 2%;
+  margin-right: auto;
+  margin-top: 5%;
+  text-align: left;
+}
+
+.item-input {
+  border: solid 1px grey;
+  border-radius: 5px;
+  width: 100%;
+}
+
+th {
+  text-align: center;
+}
+
+td {
+  text-align: center;
+}
+
+.main-body {
+  width: 100%;
+  padding: 2%;
+}
+
+.add-button {
+  margin-top: 5px;
+  transition-duration: 0.4s;
+}
+
+.item-total {
+  font-weight: bold;
+  text-align: center;
+}
+
+.total-box {
+  position: absolute;
+  top: 10%;
+  left: 80%;
+  width: 300px;
+  border: solid 1px black;
+  border-radius: 4px;
+  padding: .5%;
+  padding-left: 2%;
+}
+
+#right {
+  display: block;
+  float: right;
+  width: 50%;
+  font-weight: bold;
+}
+
+#left {
+  display: block;
+  float: left;
+  width: 50%;
+  font-weight: 400;
+}
+.Generate_Invoice {
+  border: solid 1px black;
+}

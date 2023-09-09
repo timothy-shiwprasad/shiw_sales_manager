@@ -7,6 +7,8 @@ WORKDIR  /app
 COPY . ./
 
 RUN npm install
+RUN npm install create-remix@latest --save-dev
+
 # RUN npm run build
 
 
