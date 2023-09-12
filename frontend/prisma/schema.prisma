@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  email        String   @unique
+  passwordHash String
+  resetToken   String?  @default("")
+}
+
+// still need to add foreign key and constrains
+model Products {
+  id  Int @id @default(autoincrement())
+  name String
+  description String
+  size_type  String
+  size Int
+  case_size Int
+  cost_price Int
+  barcode Int @unique
+  is_vate Boolean
+  pic String
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+}
+
+model Persons {
+  id Int @id @default(autoincrement())
+  firstName String
+  lastName String
+  Address String
+  email String   @unique
+  telephone Int //can be null
+  cellphone Int
+  category Int //foreign key
+} 
+
+model Category {
+  id Int @id @default(autoincrement())
+  type String @unique
+}
+
+model Supplied {
+  id Int @id @default(autoincrement())
+  productId  Int //foreign key
+  supplierId Int  // foreign key
+}
+
+model Prices {
+  id Int @id @default(autoincrement())
+  productId Int //foreign key
+  price Int 
+}
+
+model Invoices {
+  id Int @id @default(autoincrement())
+  customerId Int //foreign key
+  date DateTime
+  total Int 
+  pdf String
+  vat Boolean
+
+}
+
+model Sales {
+  id Int @id @default(autoincrement())
+  invoiceId Int //foreign Key
+  ProductId Int //foreign Key
+  price Int
+  quantity Int 
+}
