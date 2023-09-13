@@ -1,6 +1,8 @@
 node_modules
 
 /.cache
-/build
-/public/build
+
 .env
+build/
+/public/build/
+package-lock.json

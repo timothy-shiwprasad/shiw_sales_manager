@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,74 +7,89 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String   @id @default(uuid())
-  createAt     DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  email        String   @unique
-  passwordHash String
-  resetToken   String?  @default("")
-}
-
-// still need to add foreign key and constrains
 model Products {
-  id  Int @id @default(autoincrement())
-  name String
-  description String
-  size_type  String
-  size Int
-  case_size Int
-  cost_price Int
-  barcode Int @unique
-  is_vate Boolean
-  pic String
-  createAt     DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
+  id            String         @id @default(uuid())
+  name          String
+  description   String?
+  size_type     String
+  size          Int
+  case_size     Int
+  barcode       BigInt?        @unique
+  pic           String?
+  createAt      DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  is_vat        Boolean
+  costPrices    CostPrice[]
+  sales         Sales[]
+  sellingprices SellingPrice[]
 }
 
-model Persons {
-  id Int @id @default(autoincrement())
-  firstName String
-  lastName String
-  Address String
-  email String   @unique
-  telephone Int //can be null
-  cellphone Int
-  category Int //foreign key
-} 
+model SellingPrice {
+  id         String   @id @default(uuid())
+  customerId String
+  productId  String
+  createAt   DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  customer   Entity   @relation(fields: [customerId], references: [id])
+  product    Products @relation(fields: [productId], references: [id])
+}
+
+model CostPrice {
+  id         String   @id @default(uuid())
+  supplierId String
+  productId  String
+  createAt   DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  product    Products @relation(fields: [productId], references: [id])
+  supplier   Entity   @relation(fields: [supplierId], references: [id])
+}
+
+model Entity {
+  id            String         @id @default(uuid())
+  name          String
+  address       String
+  email         String
+  telephone     Int
+  createAt      DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  category      Category[]
+  costPrices    CostPrice[]
+  invoices      Invoice[]
+  sellingprices SellingPrice[]
+}
 
 model Category {
-  id Int @id @default(autoincrement())
-  type String @unique
+  id        String   @id @default(uuid())
+  type      String
+  entityId  String
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  entity    Entity   @relation(fields: [entityId], references: [id])
 }
 
-model Supplied {
-  id Int @id @default(autoincrement())
-  productId  Int //foreign key
-  supplierId Int  // foreign key
-}
-
-model Prices {
-  id Int @id @default(autoincrement())
-  productId Int //foreign key
-  price Int 
-}
-
-model Invoices {
-  id Int @id @default(autoincrement())
-  customerId Int //foreign key
-  date DateTime
-  total Int 
-  pdf String
-  vat Boolean
-
+model Invoice {
+  id         String   @id @default(uuid())
+  customerId String
+  date       DateTime
+  total      Int
+  pdf        String
+  vat        Boolean
+  vatTotal   Int?
+  createAt   DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  customer   Entity   @relation(fields: [customerId], references: [id])
+  sales      Sales[]
 }
 
 model Sales {
-  id Int @id @default(autoincrement())
-  invoiceId Int //foreign Key
-  ProductId Int //foreign Key
-  price Int
-  quantity Int 
+  id        String   @id @default(uuid())
+  invoiceId String
+  productId String
+  price     Int
+  quantity  Int
+  total     Int
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id])
+  product   Products @relation(fields: [productId], references: [id])
 }
