@@ -16,3 +16,5 @@ function TranformBigInt(products: any) {
   }
   return products;
 }
+
+function getProductDetails() {}

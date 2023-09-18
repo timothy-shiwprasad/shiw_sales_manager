@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-const seedData = [
+const ProductsseedData = [
   {
     name: "Gallon Marvex Bleach",
     description: "2nd largest bleach",
@@ -52,7 +52,7 @@ async function seed() {
   const prisma = new PrismaClient();
 
   try {
-    for (const products of seedData) {
+    for (const products of ProductsseedData) {
       await prisma.products.create({
         data: products,
       });

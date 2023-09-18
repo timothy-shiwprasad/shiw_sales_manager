@@ -26,6 +26,7 @@ model Products {
 
 model SellingPrice {
   id         String   @id @default(uuid())
+  cost Int
   customerId String
   productId  String
   createAt   DateTime @default(now())
@@ -36,6 +37,7 @@ model SellingPrice {
 
 model CostPrice {
   id         String   @id @default(uuid())
+  cost Int
   supplierId String
   productId  String
   createAt   DateTime @default(now())
@@ -60,11 +62,10 @@ model Entity {
 
 model Category {
   id        String   @id @default(uuid())
-  type      String
-  entityId  String
+  type      String    @unique
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
-  entity    Entity   @relation(fields: [entityId], references: [id])
+  entity   Entity[]
 }
 
 model Invoice {
