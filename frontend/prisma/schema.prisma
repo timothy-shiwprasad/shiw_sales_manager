@@ -11,14 +11,14 @@ model Products {
   id            String         @id @default(uuid())
   name          String
   description   String?
-  size_type     String
+  sizeType     String
   size          Int
-  case_size     Int
+  caseSize     Int
   barcode       BigInt?        @unique
   pic           String?
   createAt      DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
-  is_vat        Boolean
+  isVat        Boolean
   costPrices    CostPrice[]
   sales         Sales[]
   sellingprices SellingPrice[]

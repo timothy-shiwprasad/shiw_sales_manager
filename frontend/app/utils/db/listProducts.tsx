@@ -1,6 +1,6 @@
 import { PrismaClient, Products } from "@prisma/client";
 
-export default async function ListProducts() {
+export async function ListProducts() {
   const prisma = new PrismaClient();
   await prisma.$connect();
   const allproducts = await prisma.products.findMany();
@@ -17,4 +17,19 @@ function TranformBigInt(products: any) {
   return products;
 }
 
-function getProductDetails() {}
+export async function DataListProducts(isvat: Boolean) {
+  const prisma = new PrismaClient();
+  try {
+    await prisma.$connect();
+    const allproducts = await prisma.products.findMany({
+      where: {
+        isVat: isvat,
+      },
+    });
+  } catch (error) {
+    return String(error);
+  } finally {
+  }
+
+  await prisma.$disconnect();
+}

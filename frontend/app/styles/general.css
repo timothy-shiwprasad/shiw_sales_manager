@@ -37,6 +37,17 @@ td {
 
 .total-box {
   position: absolute;
+  top: 20%;
+  left: 80%;
+  width: 300px;
+  border: solid 1px black;
+  border-radius: 4px;
+  padding: 0.5%;
+  padding-left: 2%;
+}
+
+.detail-box {
+  position: absolute;
   top: 10%;
   left: 80%;
   width: 300px;
