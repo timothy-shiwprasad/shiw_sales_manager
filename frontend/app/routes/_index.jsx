@@ -1,5 +1,4 @@
 import { Form, useLoaderData } from "@remix-run/react";
-import ListProducts from "../utils/db/listProducts";
 export const meta = () => {
   return [
     { title: "Bill Generator" },

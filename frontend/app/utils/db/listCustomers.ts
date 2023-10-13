@@ -4,16 +4,18 @@ export default async function ListCustomers() {
   const prisma = new PrismaClient();
   await prisma.$connect();
   const customers = await prisma.entity.findMany({
-    include: {
+    where: {
       category: {
-        where: {
+        some: {
           type: "Customer",
         },
       },
     },
+    select: {
+      id: true,
+      name: true,
+    },
   });
   await prisma.$disconnect();
-  console.log(customers);
+  return customers;
 }
-
-ListCustomers();

@@ -48,7 +48,7 @@ model CostPrice {
 
 model Entity {
   id            String         @id @default(uuid())
-  name          String
+  name          String          @unique
   address       String
   email         String
   telephone     Int

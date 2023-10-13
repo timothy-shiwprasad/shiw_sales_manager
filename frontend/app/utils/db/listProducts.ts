@@ -17,7 +17,7 @@ function TranformBigInt(products: any) {
   return products;
 }
 
-export async function DataListProducts(isvat: Boolean) {
+export async function DataListProducts(isvat: boolean) {
   const prisma = new PrismaClient();
   try {
     await prisma.$connect();

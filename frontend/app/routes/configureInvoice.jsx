@@ -3,8 +3,12 @@
 // Date
 // customer
 
-import { Form } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
+import { json } from "@remix-run/node";
+
 import CustomerDataList from "../componets/CustomerDataList";
+import ListCustomers from "../utils/db/listCustomers";
+
 import { redirect } from "react-router";
 
 export const action = async ({ request }) => {
@@ -37,10 +41,18 @@ export const action = async ({ request }) => {
   }
 };
 
+export const loader = async () => {
+  const customers = await ListCustomers();
+  return json({ customers: customers });
+};
+
 export default function Page() {
+  const { customers } = useLoaderData();
+  console.log(customers);
+
   return (
     <div className="cfi-body">
-      <CustomerDataList />
+      <CustomerDataList customers={customers} />
       <div className="container px-4 cfi-main">
         <Form method="post">
           <div className="columns-2">
@@ -92,7 +104,7 @@ export default function Page() {
 }
 
 function validateInvoiceDetails(date, bill, type, customer) {
-  // TODO THIS FUNCTION IS NOT RETURNING APPORIATE RESPONSE
+  // TODO error reporting ui for user.
   if (date == null) {
     return "No Date Specified";
   } else if (bill == null) {

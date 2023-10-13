@@ -6,16 +6,24 @@ import DetailsBox from "../componets/DetailsBox";
 import { useState } from "react";
 import { useLoaderData } from "@remix-run/react";
 import { json } from "@remix-run/node";
+import getCustomerDetails from "../utils/db/getCustomerDetails";
 
-export const loader = ({ request }) => {
+export const loader = async ({ request }) => {
   const url = new URL(request.url);
   // TODO: rename these variables in the url
   const bill = url.searchParams.get("bill");
   const type = url.searchParams.get("type");
   const date = url.searchParams.get("date");
   const customer = url.searchParams.get("customer");
+  let customerDetails = await getCustomerDetails(customer);
+  console.log("customer ", customerDetails);
   // use customer name to get customer details
-  return json({ isvat: type, bill: bill, date: date, customer: customer });
+  return json({
+    isvat: type,
+    bill: bill,
+    date: date,
+    customer: customer,
+  });
 };
 
 export default function CreateInvoice() {
