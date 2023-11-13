@@ -1,4 +1,5 @@
-export default function DetailsBox({ date, customerName, billType }) {
+export default function DetailsBox({ date, customer, billType }) {
+  console.log(customer);
   return (
     <div className="detail-box grid grid-cols-1 divide-1">
       <div>
@@ -11,7 +12,11 @@ export default function DetailsBox({ date, customerName, billType }) {
       </div>
       <div>
         <span id="left">Customer :</span>
-        <span id="right">{customerName}</span>
+        <span id="right">{customer.name}</span>
+      </div>
+      <div id="customer-id">
+        <span id="customer-id left">Customer ID:</span>
+        <span id="right">{customer.id}</span>
       </div>
     </div>
   );

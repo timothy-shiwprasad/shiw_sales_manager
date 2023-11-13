@@ -1,10 +1,9 @@
-export default function DataList() {
+export default function DataList({ products }) {
   return (
     <datalist id="products">
-      <option value="Chocolate" />
-      <option value="Coconut" />
-      <option value="Strawberry" />
-      <option value="Vanilla" />
+      {products?.map((product, index) => (
+        <option value={product.product.name} key={product.id} />
+      ))}
     </datalist>
   );
 }
