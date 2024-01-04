@@ -14,7 +14,7 @@ model Products {
   sizeType     String
   size          Int
   caseSize     Int
-  barcode       BigInt?        @unique
+  barcode       BigInt?        @unique  
   pic           String?
   createAt      DateTime       @default(now())
   updatedAt     DateTime       @updatedAt

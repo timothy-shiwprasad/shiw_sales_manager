@@ -1,15 +1,11 @@
-export default function updateRows(e) {
-  const details = find_matching_product(e.target.value);
-
-  //console.log(e.target.dataset.key);
-  // get row
-
+import axios from "axios";
+export default async function updateRows(e) {
+  const details = await find_matching_product(e.target.value);
   let rows = document.getElementsByTagName("tr");
   let row = null;
   for (let i = 1; i < rows.length; i++) {
     if (rows[i].getAttribute("data-row") == e.target.dataset.key) {
       row = rows[i];
-      console.log("found");
       break;
     }
   }
@@ -19,11 +15,11 @@ export default function updateRows(e) {
     if (td[i].id == "case_size") {
       let input_list = td[i].childNodes;
       let input = input_list[0];
-      input.value = details["case_size"];
+      input.value = details["caseSize"];
     } else if (td[i].id == "price") {
       let input_list = td[i].childNodes;
       let input = input_list[0];
-      input.value = details["price"];
+      input.value = details["sellingprices"][0]["cost"];
     }
   }
   //console.log(td);
@@ -31,33 +27,39 @@ export default function updateRows(e) {
   // update rows
 }
 
-function find_matching_product(product) {
-  const products = [
-    {
-      name: "Chocolate",
-      price: "100",
-      case_size: 24,
-    },
-    {
-      name: "Coconut",
-      price: "200",
-      case_size: 24,
-    },
-    {
-      name: "Strawberry",
-      price: "300",
-      case_size: 24,
-    },
-    {
-      name: "Vanilla",
-      price: "400",
-      case_size: 24,
-    },
-  ];
+async function find_matching_product(product) {
+  /*
+  This functions takes in a item name and returns
+  the details needed for the invoice.
 
-  for (let i = 0; i < products.length; i++) {
-    if (products[i]["name"] == product) {
-      return products[i];
-    }
+  product : string 
+  name of the item to be searched.
+
+  return
+  productDetail : json 
+
+  */
+
+  //makes request to backend for details info.
+  var customerId = get_customer_id();
+
+  const formData = new FormData();
+  formData.append("product", product);
+  formData.append("customerId", customerId);
+  const response = await axios
+    .post("/api/get_item_details", formData)
+    .then((res) => res.data);
+  if (response) {
+    console.log(response);
+    return response;
+  } else {
+    return null;
   }
+}
+
+function get_customer_id() {
+  let span = document.getElementById("customer-id");
+  var children = span.childNodes;
+  return children[1].innerText;
+  //return spans[1].value;
 }
