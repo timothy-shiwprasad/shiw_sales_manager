@@ -8,55 +8,39 @@ export default async function GenerateInvoiceJson(e) {
 
   for (let i = 0; i < product_rows.length; i++) {
     let row = product_rows[i].childNodes;
-    if(e.target.dataset.key == 1){
-      let item = getvaluejson(row,true);
+    if (e.target.dataset.key == 1) {
+      let item = getvaluejson(row, true);
       items.push(item);
-
-    }
-    else {
-      let item = getvaluejson(row,false);
+    } else {
+      let item = getvaluejson(row, false);
       items.push(item);
-
-  
     }
-  
   }
-
+  console.log("i hope this is called first");
   EasyInvoice(items);
-
-
-
- 
 }
 
-function getvaluejson(row,vat) {
+function getvaluejson(row, vat) {
   const quantity = ReturnQuantity(row[0]);
   const case_size = ReturnCaseSize(row[1]);
   const description = ReturnDescription(row[2]);
   const price = ReturnPrice(row[3]);
 
-  if(vat){
+  if (vat) {
     return {
-      'quantity': case_size * quantity,
-      'price': price,
-      'tax-rate' : 14,
-      'description': description + " -- " +  case_size + " per case" ,
+      quantity: case_size * quantity,
+      price: price,
+      "tax-rate": 14,
+      description: description + " -- " + case_size + " per case",
     };
-
-  }
-
-  else {
+  } else {
     return {
-      'quantity': case_size * quantity,
-      'price': price,
-      'description': description + " -- " +  case_size + " per case",
-      'tax-rate' : 0,
-
+      quantity: case_size * quantity,
+      price: price,
+      description: description + " -- " + case_size + " per case",
+      "tax-rate": 0,
     };
-
   }
-
-  
 }
 
 function ReturnQuantity(column) {
